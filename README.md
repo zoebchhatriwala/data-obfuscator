@@ -1,4 +1,3 @@
-````markdown
 # 🔐 Data Obfuscator
 
 A Python module to obfuscate and restore sensitive personal data or sensitive data. Useful for anonymising contracts, agreements, and similar documents before sharing, storing, or processing.
@@ -23,7 +22,6 @@ A Python module to obfuscate and restore sensitive personal data or sensitive da
 git clone https://github.com/zoebchhatriwala/data-obfuscator.git
 cd data-obfuscator
 ```
-````
 
 2. Install dependencies:
 
