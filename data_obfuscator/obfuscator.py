@@ -13,10 +13,11 @@ class DataObfuscator:
         self.data_mappings = defaultdict(lambda: {"names": {}, "amounts": {}, "emails": {}})
 
     def _generate_unique_random_name(self, used_names):
-        first_names = ["Alice", "Bob", "Clara", "David", "Emma"]
-        last_names = ["Smith", "Johnson", "Brown", "Taylor", "Wilson"]
+        alphabets = 'abcdefghijklmnopqrstuvwxyz'
+        first_name = ''.join(random.choices(alphabets, k=8)).capitalize()
+        last_name = ''.join(random.choices(alphabets, k=8)).capitalize()
         while True:
-            name = f"{random.choice(first_names)} {random.choice(last_names)}"
+            name = f"{first_name} {last_name}"
             if name not in used_names:
                 return name
 
