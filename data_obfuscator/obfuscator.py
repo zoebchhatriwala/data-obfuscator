@@ -12,6 +12,13 @@ class DataObfuscator:
         # Mapping: document_id -> { names, amounts, emails }
         self.data_mappings = defaultdict(lambda: {"names": {}, "amounts": {}, "emails": {}})
 
+    def _generate_unique_organization_name(self, used_names, length=16):
+        alphabets = 'abcdefghijklmnopqrstuvwxyz'
+        name = ''.join(random.choices(alphabets, k=length)).capitalize()
+        while True:
+            if name not in used_names:
+                return name
+
     def _generate_unique_random_name(self, used_names):
         alphabets = 'abcdefghijklmnopqrstuvwxyz'
         first_name = ''.join(random.choices(alphabets, k=8)).capitalize()
@@ -79,6 +86,26 @@ class DataObfuscator:
                         # Store the mapping
                         names_map[original] = replacement
                     
+                # Add the replacement to the list
+                replacements.append((ent.start_char, ent.end_char, replacement))
+            elif ent.label_ == "ORG":
+                # Get the original organization name
+                original = ent.text
+
+                # Initialize the replacement
+                replacement = ''
+
+                # Check if the organization is already in the map
+                if original in names_map:
+                    # If it is, use the mapped name
+                    replacement = names_map[original]
+                else:
+                    # If not, generate a new unique name
+                    replacement = self._generate_unique_organization_name(set(names_map), length=len(original))
+
+                    # Store the mapping
+                    names_map[original] = replacement
+                
                 # Add the replacement to the list
                 replacements.append((ent.start_char, ent.end_char, replacement))
             elif ent.label_ == "MONEY":
